@@ -122,5 +122,15 @@ def update():
     
 @auth.requires_membership('admin')
 def situacao():
-     return dict()
+    vaga = table(request.args(0)) or redirect(URL('index'))
+    
+    q = db.formacao_academica.tipo == vaga.form_academica
+    formacoes = db(q).select()
+    forms = []
+    for f in formacoes:
+        forms.append(SQLFORM(db.curriculo,f.id_curriculo))
+    
+    
+
+    return dict(item_name=table._singular, form=forms)
 

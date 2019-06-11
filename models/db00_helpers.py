@@ -219,12 +219,12 @@ def sidebar_menu_item(label, url=None, icon='link'):
 # ]
 
 def is_user_member(roles):
-    auth_group = auth.user_group(auth.user.id)
-    print(auth.has_membership(auth_group, auth.user.id, roles))
-    if auth.has_membership(auth_group, auth.user.id, roles):
-        return True
-    else:
-        return False
+    if auth.user:
+        auth_group = auth.user_group(auth.user.id)
+        print(auth.has_membership(auth_group, auth.user.id, roles))
+        if auth.has_membership(auth_group, auth.user.id, roles):
+            return True
+    return False
 
 def user_visibility(*groups):
     """in views, in class attribute: {{=user_visibility('list', 'of', 'authorized', 'user_groups')}}"""

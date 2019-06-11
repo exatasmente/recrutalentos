@@ -111,6 +111,7 @@
 'FAQ': 'Perguntas frequentes',
 'file ## download': 'file ',
 'First name': 'Nome',
+'Formacao academicas': 'Formacao academicas',
 'Formação Academica': 'Formação Academica',
 'Forms and Validators': 'Formulários e Validadores',
 'Free Applications': 'Aplicações gratuitas',

@@ -17,6 +17,6 @@ db.define_table(
         'reference auth_user',
     ),
     auth.signature,
-    singular='Task', plural='Tasks',
+    singular='Tarefa', plural='Tarefas',
     format='%(title)s',
 )
