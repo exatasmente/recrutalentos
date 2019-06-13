@@ -16,6 +16,8 @@ Field('endereco', 'list:string', label='Endereço'),
 Field('foto', 'upload', label='Foto'),
 Field('data_nascimento', 'date', label='Data de Nascimento', requires = IS_DATE(format=('%m/%d/%Y'))),
 Field('objetivo_setor', 'string', label='Setor')
+
+
 )
 
 Form_academica = db.define_table("formacao_academica",

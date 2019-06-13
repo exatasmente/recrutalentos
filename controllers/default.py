@@ -66,3 +66,13 @@ def call():
     supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
     """
     return service()
+
+@request.restful()
+def api():
+    response.view = 'generic.json'
+
+    def GET(tablename, id):
+        if not tablename == 'curriculo':
+            raise HTTP(400)
+        return dict(curriculo = db.curriculo(id))
+    return locals()

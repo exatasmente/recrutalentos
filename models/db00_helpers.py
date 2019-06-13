@@ -221,7 +221,7 @@ def sidebar_menu_item(label, url=None, icon='link'):
 def is_user_member(roles):
     if auth.user:
         auth_group = auth.user_group(auth.user.id)
-        print(auth.has_membership(auth_group, auth.user.id, roles))
+        
         if auth.has_membership(auth_group, auth.user.id, roles):
             return True
     return False
