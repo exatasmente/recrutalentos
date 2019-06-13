@@ -56,7 +56,7 @@ def create():
     if form.process().accepted:
         id = db.vaga.insert(**db.vaga._filter_fields(form.vars))
         db.processo.insert(etapa=1,idVaga=id,prazo = form.vars.prazo)
-
+        recrutalentos_pegaCurriculos(id)
         session.flash = "Vaga Adicionada com Sucesso"
         redirect(URL(request.controller, 'list'))
     elif form.errors:
@@ -122,4 +122,8 @@ def update():
     
 @auth.requires_membership('admin')
 def situacao():
-   return dict()
+    return dict()
+
+def recrutalentos_pegaCurriculos(id):
+    #TODO
+    pass

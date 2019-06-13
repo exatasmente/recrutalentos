@@ -16,8 +16,6 @@ Field('endereco', 'list:string', label='Endereço'),
 Field('foto', 'upload', label='Foto'),
 Field('data_nascimento', 'date', label='Data de Nascimento', requires = IS_DATE(format=('%m/%d/%Y'))),
 Field('objetivo_setor', 'string', label='Setor')
-
-
 )
 
 Form_academica = db.define_table("formacao_academica",
@@ -38,30 +36,6 @@ Field("id_curriculo","reference curriculo")
 )
 
 
-Entrevista = db.define_table('entrevista',
-Field('obsNegativas', 'list:string', label='Pontos Negativos'),
-Field('obsPositivas', 'list:string', label='Pontos Positivos'),
-Field('idCurriculo', 'reference curriculo')
-)
-
-Dinamica = db.define_table('dinamica',
-Field('nome', 'string', label='Nome'),
-Field('descricao', 'string', label='Contato'),
-Field('tipo', 'boolean', label='Tipo de Dinamica'),
-Field('obsNegativas', 'list:string', label='Pontos Negativos'),
-Field('obsPositivas', 'list:string', label='Pontos Positivos'),
-Field('idCurriculo','reference curriculo')
-)
-
-Teste = db.define_table('teste',
-Field('nome', 'string', label='Nome'),
-Field('descricao', 'string', label='Contato'),
-Field('tipo', 'boolean', label='Tipo de Dinamica'),
-Field('obsNegativas', 'list:string', label='Pontos Negativos'),
-Field('obsPositivas', 'list:string', label='Pontos Positivos'),
-Field('idCurriculo', 'reference curriculo')
-)
-
 Vaga = db.define_table('vaga',
 Field('nome', 'string', label='Nome'),
 Field("form_academica","integer",label="Formação Acadêmica",notnull=True,requires = IS_IN_SET((1,2,3,4,5))),
@@ -75,14 +49,46 @@ Field('qtdCandidatos', 'integer', label='Quantidade de Candidatos'),
 Field('responsavelVaga', 'string', label='Responsável pela Vaga')
 )
 
+
 Processo = db.define_table('processo',
-Field('etapa', 'integer'),
+Field('etapa', 'list:string'),
 Field('idVaga', 'reference vaga'),
 Field('prazo', 'date')
 )
 
+
+
+Entrevista = db.define_table('entrevista',
+Field('obsNegativas', 'list:string', label='Pontos Negativos'),
+Field('obsPositivas', 'list:string', label='Pontos Positivos'),
+Field('id_curriculo', 'reference curriculo'),
+Field('id_processo', 'reference processo')
+)
+
+Dinamica = db.define_table('dinamica',
+Field('nome', 'string', label='Nome'),
+Field('descricao', 'string', label='Descrição'),
+Field('tipo', 'boolean', label='Tipo de Dinamica'),
+Field('obsNegativas', 'list:string', label='Pontos Negativos'),
+Field('obsPositivas', 'list:string', label='Pontos Positivos'),
+Field('id_curriculo','reference curriculo'),
+Field('id_processo', 'reference processo')
+)
+
+Teste = db.define_table('teste',
+Field('nome', 'string', label='Nome'),
+Field('descricao', 'string', label='Contato'),
+Field('tipo', 'boolean', label='Tipo de Dinamica'),
+Field('obsNegativas', 'list:string', label='Pontos Negativos'),
+Field('obsPositivas', 'list:string', label='Pontos Positivos'),
+Field('id_curriculo', 'reference curriculo'),
+Field('id_processo', 'reference processo')
+)
+
+
+
 ProcessoCurriculo = db.define_table('processoCurriculo',
-Field('idCurriculo', 'reference curriculo'),
+Field('id_curriculo', 'reference curriculo'),
 Field('idProcesso', 'reference processo')
 )
 

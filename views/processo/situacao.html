@@ -2,29 +2,259 @@
 
 {{extend 'layout.html'}}
 
+<div class="row">
+  <div class="col-md-12">
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Processo : Auxiliar Administrativo</h3>
 
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+          </button>
+          <div class="btn-group">
+            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+              <i class="fa fa-wrench"></i></button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Gerar Relatório</a></li>
+
+            </ul>
+          </div>
+          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <div class="row">
+          <div class="col-md-8">
+            <p class="text-center">
+              <strong>Candidatos</strong>
+            </p>
+
+            <div class="chart">
+              <!-- Sales Chart Canvas -->
+              <canvas id="candidatosChart" style="height: 100%; width: 636px;" width="636" height="400"></canvas>
+            </div>
+            <!-- /.chart-responsive -->
+            <div class="candidados">
+              <ul class="products-list product-list-in-box">
+
+                <li class="item">
+                  <div class="product-img">
+                    <img src="https://via.placeholder.com/150" alt="Candidato">
+                  </div>
+                  <div class="product-info">
+                    <a href="javascript:void(0)" class="product-title">Candidato 1</a>
+                    <p class="product-description">
+                      Ensino médio completo,
+                      2 anos de experiência,
+                      disponibilidade de horário
+                    </p>
+                  </div>
+                </li>
+                <!-- /.item -->
+                <li class="item">
+                  <div class="product-img">
+                    <img src="https://via.placeholder.com/150" alt="Candidato">
+                  </div>
+                  <div class="product-info">
+                    <a href="javascript:void(0)" class="product-title">Candidato 2</a>
+                    <p class="product-description">
+                      Ensino médio completo,
+                      2 anos de experiência,
+                      disponibilidade de horário
+                    </p>
+                  </div>
+                </li>
+                <!-- /.item -->
+                <li class="item">
+                  <div class="product-img">
+                    <img src="https://via.placeholder.com/150" alt="Candidato">
+                  </div>
+                  <div class="product-info">
+                    <a href="javascript:void(0)" class="product-title">Candidato 3</a>
+                    <p class="product-description">
+                      Ensino médio completo,
+                      2 anos de experiência,
+                      disponibilidade de horário
+                    </p>
+                  </div>
+                </li>
+                <!-- /.item -->
+                <li class="item">
+                  <div class="product-img">
+                    <img src="https://via.placeholder.com/150" alt="Candidato">
+                  </div>
+                  <div class="product-info">
+                    <a href="javascript:void(0)" class="product-title">Candidato 4</a>
+                    <p class="product-description">
+                      Ensino médio completo,
+                      2 anos de experiência,
+                      disponibilidade de horário
+                    </p>
+                  </div>
+                </li>
+           
+              </ul>
+            </div>
+          </div>
+          <!-- /.col -->
+          <div class="col-md-4">
+            <p class="text-center">
+              <strong>Etapas</strong>
+            </p>
+            <ul class="timeline">
+
+              <!-- timeline time label -->
+              <li class="time-label">
+                <span class="bg-green">
+                  20 Maio 2019
+                </span>
+              </li>
+              <!-- /.timeline-label -->
+
+              <!-- timeline item -->
+              <li>
+                <!-- timeline icon -->
+                <i class="fa fa-plus bg-green"></i>
+                <div class="timeline-item">
+                  <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+
+                  <h3 class="timeline-header"><a href="#">Candidatos</a></h3>
+
+                  <div class="timeline-body">
+                    Entrar em contato com os candidados via telefone para a proxima etapa
+
+                  </div>
+
+                  <div class="timeline-footer">
+                    <a class="btn btn-primary btn-xs">Ver Candidatos</a>
+                  </div>
+                </div>
+              </li>
+              <!-- END timeline item -->
+              <!-- timeline time label -->
+              <li class="time-label">
+                <span class="bg-green">
+                  20 Maio 2019
+                </span>
+              </li>
+              <!-- /.timeline-label -->
+              <!-- timeline item -->
+              <li>
+                <!-- timeline icon -->
+                <i class="fa fa-plus bg-green"></i>
+                <div class="timeline-item">
+                  <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+
+                  <h3 class="timeline-header"><a href="#">Candidatos</a></h3>
+
+                  <div class="timeline-body">
+                    Entrar em contato com os candidados via telefone para a proxima etapa
+
+                  </div>
+
+                  <div class="timeline-footer">
+                    <a class="btn btn-primary btn-xs">Ver Candidatos</a>
+                  </div>
+                </div>
+              </li>
+              <!-- END timeline item -->
+
+            </ul>
+
+            <div class="form-group" style="margin-left: 40px">
+              <label>Nova Etapa</label>
+              <select class="form-control">
+                <option>Entrevista</option>
+                <option>Teste</option>
+                <option>Dinâmica</option>
+              </select>
+              <label>Data:</label>
+              <div class="input-group date">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <input type="text" class="form-control pull-right" id="datepicker">
+
+              </div>
+              <label>Descrição:</label>
+              <div class="input-group text">
+                <input type="text" class="form-control pull-right" id="descricao">
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-success btn-flat">Adicionar</button>
+                </span>
+              </div>
+              <!-- /.input group -->
+
+            </div>
+
+          </div>
+
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- ./box-body -->
+    <div class="box-footer">
+      <div class="row">
+
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.box-footer -->
+  </div>
+  <!-- /.box -->
+</div>
+<!-- /.col -->
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script type="text/javascript">
-  $(document).ready(function() {
+  var ctx = document.getElementById('candidatosChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Candidato 1', 'Candidato 2', 'Candidato 3', 'Candidato 4', 'Candidato 5', 'Candidato 6'],
+      datasets: [{
+        label: 'Pontuação',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      events: ['click'],
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
 
-    $('#service_request_request_priority option').each(function() {
+
+  $(document).ready(function () {
+
+    $('#service_request_request_priority option').each(function () {
       if (this.innerHTML.indexOf("*") != -1) {
-          var catclass = this.innerHTML.split("*",2);
-          $(this).addClass(catclass[0]);
-          this.text = catclass[1];
+        var catclass = this.innerHTML.split("*", 2);
+        $(this).addClass(catclass[0]);
+        this.text = catclass[1];
       }
     })
 
     $("#service_request_request_priority").chained("#service_request_request_type");
 
-    $('#service_request_request_subcategory option').each(function() {
+    $('#service_request_request_subcategory option').each(function () {
       if (this.innerHTML.indexOf("*") != -1) {
-          var catclass = this.innerHTML.split("*",2);
-          $(this).addClass(catclass[0]);
-          this.text = catclass[1];
+        var catclass = this.innerHTML.split("*", 2);
+        $(this).addClass(catclass[0]);
+        this.text = catclass[1];
       }
     })
 
     $("#service_request_request_subcategory").chained("#service_request_request_category");
 
-  } );
+  });
 </script>
