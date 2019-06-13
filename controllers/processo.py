@@ -127,3 +127,6 @@ def situacao():
 def recrutalentos_pegaCurriculos(id):
     #TODO
     pass
+
+def test():
+    return dict()

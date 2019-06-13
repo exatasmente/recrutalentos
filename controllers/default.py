@@ -76,3 +76,6 @@ def api():
             raise HTTP(400)
         return dict(curriculo = db.curriculo(id))
     return locals()
+
+def tou():
+    return dict()
