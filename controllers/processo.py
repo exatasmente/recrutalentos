@@ -130,3 +130,4 @@ def recrutalentos_pegaCurriculos(id):
 
 def test():
     return dict()
+
