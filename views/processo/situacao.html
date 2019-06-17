@@ -6,20 +6,19 @@
   <div class="col-md-12">
     <div class="box">
       <div class="box-header with-border">
-        <h3 class="box-title">Processo : Auxiliar Administrativo</h3>
+        <h3 class="box-title">Processo : {{=nome_processo}}</h3>
 
         <div class="box-tools pull-right">
           <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
           </button>
           <div class="btn-group">
             <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-              <i class="fa fa-wrench"></i></button>
+              <i class="fa fa-bars"></i></button>
             <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Adicionar Etapa</a></li>
               <li><a href="#">Gerar Relatório</a></li>
-
             </ul>
           </div>
-          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
         </div>
       </div>
       <!-- /.box-header -->
@@ -37,63 +36,22 @@
             <!-- /.chart-responsive -->
             <div class="candidados">
               <ul class="products-list product-list-in-box">
+                {{for candidato in candidatos:}}
+                
+                <li class="item">
+                  <div class="product-img">
+                    <img src="{{=candidato['foto']}}"" alt=" {{=candidato['nome']}}">
+                  </div>
+                  <div class="product-info">
+                    <a href="javascript:void(0)" class="product-title">{{=candidato['nome'] }}</a>
+                    <p class="product-description">
 
-                <li class="item">
-                  <div class="product-img">
-                    <img src="https://via.placeholder.com/150" alt="Candidato">
-                  </div>
-                  <div class="product-info">
-                    <a href="javascript:void(0)" class="product-title">Candidato 1</a>
-                    <p class="product-description">
-                      Ensino médio completo,
-                      2 anos de experiência,
-                      disponibilidade de horário
                     </p>
                   </div>
                 </li>
+                {{pass}}
                 <!-- /.item -->
-                <li class="item">
-                  <div class="product-img">
-                    <img src="https://via.placeholder.com/150" alt="Candidato">
-                  </div>
-                  <div class="product-info">
-                    <a href="javascript:void(0)" class="product-title">Candidato 2</a>
-                    <p class="product-description">
-                      Ensino médio completo,
-                      2 anos de experiência,
-                      disponibilidade de horário
-                    </p>
-                  </div>
-                </li>
-                <!-- /.item -->
-                <li class="item">
-                  <div class="product-img">
-                    <img src="https://via.placeholder.com/150" alt="Candidato">
-                  </div>
-                  <div class="product-info">
-                    <a href="javascript:void(0)" class="product-title">Candidato 3</a>
-                    <p class="product-description">
-                      Ensino médio completo,
-                      2 anos de experiência,
-                      disponibilidade de horário
-                    </p>
-                  </div>
-                </li>
-                <!-- /.item -->
-                <li class="item">
-                  <div class="product-img">
-                    <img src="https://via.placeholder.com/150" alt="Candidato">
-                  </div>
-                  <div class="product-info">
-                    <a href="javascript:void(0)" class="product-title">Candidato 4</a>
-                    <p class="product-description">
-                      Ensino médio completo,
-                      2 anos de experiência,
-                      disponibilidade de horário
-                    </p>
-                  </div>
-                </li>
-           
+
               </ul>
             </div>
           </div>
@@ -102,12 +60,13 @@
             <p class="text-center">
               <strong>Etapas</strong>
             </p>
-            <ul class="timeline">
+            <ul id="timeline" class="timeline" style="max-height: 600px; overflow: auto">
 
               <!-- timeline time label -->
+              {{for etapa in etapas:}}
               <li class="time-label">
-                <span class="bg-green">
-                  20 Maio 2019
+                <span class="bg-{{=etapa['cor']}}">
+                  {{=etapa["data"]}}
                 </span>
               </li>
               <!-- /.timeline-label -->
@@ -115,96 +74,54 @@
               <!-- timeline item -->
               <li>
                 <!-- timeline icon -->
-                <i class="fa fa-plus bg-green"></i>
+                <i class='fa {{=etapa["icone"]}} bg-{{=etapa["cor"]}}'></i>
                 <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+                  <span class="time"><i class="fa fa-clock-o"></i> {{=etapa["hora"]}}</span>
 
-                  <h3 class="timeline-header"><a href="#">Candidatos</a></h3>
+                  <h3 class="timeline-header"><a href="#">{{=etapa["nome"]}}</a></h3>
 
                   <div class="timeline-body">
-                    Entrar em contato com os candidados via telefone para a proxima etapa
+                    {{=etapa['informacoes']}}
 
                   </div>
 
                   <div class="timeline-footer">
-                    <a class="btn btn-primary btn-xs">Ver Candidatos</a>
+                    {{for acao in etapa["acoes"]:}}
+                    <a href="{{=acao['link']}}" class="btn btn-primary btn-xs">{{=acao["nome"]}}</a>
+                    {{pass}}
                   </div>
                 </div>
               </li>
+              {{pass}}
               <!-- END timeline item -->
-              <!-- timeline time label -->
-              <li class="time-label">
-                <span class="bg-green">
-                  20 Maio 2019
-                </span>
-              </li>
-              <!-- /.timeline-label -->
-              <!-- timeline item -->
-              <li>
-                <!-- timeline icon -->
-                <i class="fa fa-plus bg-green"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-
-                  <h3 class="timeline-header"><a href="#">Candidatos</a></h3>
-
-                  <div class="timeline-body">
-                    Entrar em contato com os candidados via telefone para a proxima etapa
-
-                  </div>
-
-                  <div class="timeline-footer">
-                    <a class="btn btn-primary btn-xs">Ver Candidatos</a>
-                  </div>
-                </div>
-              </li>
-              <li>
-                  <i class="fa fa-comments bg-yellow"></i>
-    
-                  <div class="timeline-item">
-                    <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-    
-                    <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-    
-                    <div class="timeline-body">
-                      Take me to your leader!
-                      Switzerland is small and neutral!
-                      We are more like Germany, ambitious and misunderstood!
-                    </div>
-                    <div class="timeline-footer">
-                      <a class="btn btn-warning btn-flat btn-xs">View comment</a>
-                    </div>
-                  </div>
-                </li>
-              <!-- END timeline item -->
-
             </ul>
 
-            <div class="form-group" style="margin-left: 40px">
+            <form id="etapas" class="form-group" style="margin-left: 40px">
               <label>Nova Etapa</label>
-              <select class="form-control">
-                <option>Entrevista</option>
-                <option>Teste</option>
-                <option>Dinâmica</option>
+              <select name="tipo" class="form-control">
+                <option value="1">Entrevista</option>
+                <option value="2">Teste</option>
+                <option value="3">Dinâmica</option>
               </select>
               <label>Data:</label>
               <div class="input-group date">
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
                 </div>
-                <input type="text" class="form-control pull-right" id="datepicker">
+                <input name="prazo" type="text" class="form-control pull-right" id="prazo">
 
               </div>
               <label>Descrição:</label>
               <div class="input-group text">
-                <input type="text" class="form-control pull-right" id="descricao">
+                <input name="descricao" type="text" class="form-control pull-right" id="descricao">
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-success btn-flat">Adicionar</button>
+                  <button type="submit"    class="btn btn-success btn-flat">Adicionar</button>
                 </span>
               </div>
               <!-- /.input group -->
 
-            </div>
+            </form>
+
 
           </div>
 
@@ -228,14 +145,29 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script type="text/javascript">
+jQuery("#etapas").submit( function(){
+  ajax('{{=URL('processo', 'etapas')}}', ['tipo','prazo','descricao'],':eval');
+  return false;
+})
+
   var ctx = document.getElementById('candidatosChart').getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['Candidato 1', 'Candidato 2', 'Candidato 3', 'Candidato 4', 'Candidato 5', 'Candidato 6'],
+      labels: [
+        {{i = len(candidatos)}}
+        {{for c in candidatos:}}
+          "{{response.write(c["nome"])}}"
+          {{if i > 1:}}
+            {{response.write(",")}}
+          {{pass}}
+          {{i = i -1}}
+          
+         {{pass}}
+         ],
       datasets: [{
         label: 'Pontuação',
-        data: [12, 19, 3, 5, 2, 3],
+        data: [{{for c in candidatos:}} {{=c["pontos"]+","}} {{pass}}],
         borderWidth: 0
       }]
     },
@@ -251,7 +183,7 @@
     }
   });
 
-
+  
   $(document).ready(function () {
 
     $('#service_request_request_priority option').each(function () {

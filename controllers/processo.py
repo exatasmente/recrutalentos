@@ -40,7 +40,7 @@ def list():
 @auth.requires_login()
 def create():
     form = SQLFORM.factory(
-        Field('nome', 'string', label='Nome'),
+        Field('"nome"', 'string', label='"nome"'),
         Field("form_academica","integer",label="Formação Acadêmica",notnull=True,requires = IS_IN_SET(((1,"Superior"),(2,"Técnico"),(3,"Médio"),(4,"Fundamental"),(5,"Não se aplica")))),
         Field('experiencia', 'integer', label='Experiencia Profissional (em meses)'),
         Field('localTrabalho', 'string', label='Local de Trabalho'),
@@ -122,7 +122,16 @@ def update():
     
 @auth.requires_membership('admin')
 def situacao():
-    return dict()
+    return dict(nome_processo="Auxiliar Administrativo",candidatos=[
+        {"nome":"Candidato 1","pontos":"10","foto":"http://127.0.0.1:8000/recrutalentos/static/img/avatar5.png"},
+        {"nome":"Candidato 2","pontos":"5","foto":"http://127.0.0.1:8000/recrutalentos/static/img/avatar5.png"},
+        {"nome":"Candidato 3","pontos":"12","foto":"http://127.0.0.1:8000/recrutalentos/static/img/avatar5.png"},
+        {"nome":"Candidato 4","pontos":"17","foto":"http://127.0.0.1:8000/recrutalentos/static/img/avatar5.png"},
+        {"nome":"Candidato 5","pontos":"20","foto":"http://127.0.0.1:8000/recrutalentos/static/img/avatar5.png"}],
+        etapas = [
+            {"data":"20 Maio 2019","hora":"10:00","acoes":[{"nome":"Ver","link":""}],"nome":"Candidatos","informacoes":"Ver Lista de candidatos escolhidos pelos sistema","icone":"fa-suitcase","cor":"blue"}
+            ]
+        )
 
 def recrutalentos_pegaCurriculos(id):
     #TODO
@@ -131,3 +140,42 @@ def recrutalentos_pegaCurriculos(id):
 def test():
     return dict()
 
+def etapas():
+    from datetime import datetime
+    cor = ""
+    prazo = request.vars.prazo or " "
+    descricao = request.vars.descricao or " "
+    hora = "".join([str(datetime.now().time().hour),":",str(datetime.now().time().minute)])
+    if request.vars.tipo == 1 : 
+        cor ='bg-blue'
+    else: 
+        cor ='bg-green'
+    return "jQuery('#timeline').append('"+str(LI(SPAN(prazo,_class=cor),_class="time-label"))+str(LI(
+        I(_class="fa fa-suitcase "+cor),
+        DIV(
+            SPAN(
+                I(_class="fa fa-clock-o"),
+                " "+hora,
+                _class="time"
+                ),
+            H3(
+                A("TIPO ETAPA",_href="#"),
+                _class="timeline-header"
+                )
+            ,
+            DIV(
+                descricao,
+                _class="timeline-body"
+            ),
+            DIV(
+                A(
+                    "Ver",
+                    _href="#",
+                    _class="btn btn-primary btn-xs"
+                ),
+                _class="timeline-footer"
+            ),
+            _class="timeline-item"
+            ),
+        ))+"');"
+     
