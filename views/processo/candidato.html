@@ -1,0 +1,297 @@
+{{extend 'layout.html'}}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">{{=nome}}</h3>
+
+        <div class="box-tools pull-right">
+          <!-- Minimizar-->
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+          </button>
+          <!-- /Minimizar -->
+          <!-- Fechar -->
+          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          <!-- /Fechar -->
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <div class="row">
+          <div class="col-md-3">
+            <!-- Profile Image -->
+            <div class="box box-primary">
+              <div class="box-body box-profile">
+                <img class="profile-user-img img-responsive img-circle" src="{{=foto}}" >
+                <h3 class="profile-username text-center">{{=nome}}</h3>
+                <p class="text-muted text-center">Software Engineer</p>
+                <ul class="list-group ">
+                  <li class="list-group-item">
+                    <b>Idade</b> <a class="pull-right">32 anos</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Objetivo</b> <a class="pull-right">Auxiliar/Aprendiz</a>
+                  </li>
+                  <li class="list-group-item">
+                    <strong><i class="fa fa-book margin-r-5"></i> Educação</strong>
+                    <p class="text-muted">
+                      B.S. in Computer Science from the University of Tennessee at Knoxville
+                    </p>
+                  </li>
+                  <li class="list-group-item">
+                    <strong><i class="fa fa-map-marker margin-r-5"></i> Localização</strong>
+                    <p class="text-muted">Malibu, California</p>
+                  </li>
+                  <li class="list-group-item">
+                    <strong><i class="fa fa-pencil margin-r-5"></i> Conhecimentos </strong>
+                    <p>
+                      <span class="label label-danger">UI Design</span>
+                      <span class="label label-success">Coding</span>
+                      <span class="label label-info">Javascript</span>
+                      <span class="label label-warning">PHP</span>
+                      <span class="label label-primary">Node.js</span>
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9">            
+            <div class="nav-tabs-custom">
+              <ul class="nav nav-tabs">
+                <li class="active">
+                  <a href="#activity" data-toggle="tab" aria-expanded="true">Formação academica</a>
+                </li>
+                <li class="">
+                  <a href="#timeline" data-toggle="tab" aria-expanded="false">Experiencia Profissional</a>
+                </li>
+                <li class="">
+                  <a href="#settings" data-toggle="tab" aria-expanded="false">Conhecimentos específicos</a>
+                </li>
+                <li class="">
+                  <a href="#tag" data-toggle="tab" aria-expanded="false">Observações</a>
+                </li>
+
+                    </ul>
+                    <div class="tab-content">
+                      <div class="tab-pane active" id="activity">
+                        <!-- The timeline -->
+                        <ul class="timeline timeline-inverse">
+                            <!-- timeline time label -->
+                            <li class="time-label">
+                              <span class="bg-blue">
+                                10 Feb. 2014
+                              </span>
+                            </li>
+                            <!-- /.timeline-label -->
+                            <!-- timeline item -->
+                            <li>
+                              <i class="fa fa-university bg-green"></i>
+  
+                              <div class="timeline-item">
+                                <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+  
+                                <h3 class="timeline-header"> <b>Ensino Médio</b></h3>
+  
+                                <div class="timeline-body">
+                                  <p>Instituição : UFC </p>
+                                  <p>Ano de inicio : 2016 </p>
+                                  <p>Ano de conclusão (previso) : 2020 </p>
+                                </div>
+  
+                              </div>
+                            </li>
+                            <!-- END timeline item -->
+                         
+                          </ul>
+                      </div>
+                      <div class="tab-pane" id="timeline">
+                        <!-- The timeline -->
+                        <ul class="timeline timeline-inverse">
+                          <!-- timeline time label -->
+                          <li class="time-label">
+                            <span class="bg-red">
+                              10 Feb. 2014
+                            </span>
+                          </li>
+                          <!-- /.timeline-label -->
+                          <!-- timeline item -->
+                          <li>
+                            <i class="fa fa-envelope bg-orange"></i>
+
+                            <div class="timeline-item">
+                              <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+
+                              <h3 class="timeline-header"> <b>Nome da Empresa</b></h3>
+
+                              <div class="timeline-body">
+                                <p> Função: Analista de Sistemas </p>
+                                <p>Conhecimentos: PHP, SCRUM</p>
+                              </div>
+
+                            </div>
+                          </li>
+                          <!-- END timeline item -->
+                          <!-- timeline item -->
+                          <li class="time-label">
+                            <span class="bg-red">
+                              10 Abril 2019
+                            </span>
+                          </li>
+                          <!-- END timeline item -->
+                          <!-- timeline item -->
+                          <li>
+                            <i class="fa fa-envelope bg-orange"></i>
+
+                            <div class="timeline-item">
+                              <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
+
+                              <h3 class="timeline-header"><b>Nome da Empresa</b></h3>
+
+                              <div class="timeline-body">
+                                <p> Função: Analista de Sistemas </p>
+                                <p>Conhecimentos: PHP, SCRUM</p>
+                              </div>
+
+                            </div>
+                          </li>
+                          <!-- END timeline item -->
+                          <!-- timeline time label -->
+
+                          <!-- /.timeline-label -->
+                          <!-- timeline item -->
+
+                          <!-- END timeline item -->
+                          <li>
+                            <i class="fa fa-clock-o bg-gray"></i>
+
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="tab-pane" id="settings">
+                        <form class="form-horizontal">
+                          <div class="form-group">
+                            <span class="label label-danger">UI Design</span>
+                            <span class="label label-success">Coding</span>
+                            <span class="label label-info">Javascript</span>
+                            <span class="label label-warning">PHP</span>
+                            <span class="label label-primary">Node.js</span>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="tab-pane" id="tag">
+                        <ul class="timeline timeline-inverse">
+                          <li class="time-label">
+                            <span class="bg-green">
+                              10 Feb. 2014
+                            </span>
+                          </li>
+                          <li>
+                            <i class="fa fa-plus bg-green"></i>
+
+                            <div class="timeline-item">
+                              <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+
+                              <h3 class="timeline-header"> <b>Ensino Médio</b></h3>
+
+                              <div class="timeline-body">
+                                <p>Instituição : UFC </p>
+                                <p>Ano de inicio : 2016 </p>
+                                <p>Ano de conclusão (previso) : 2020 </p>
+                              </div>
+
+                            </div>
+                          </li>
+                          <li class="time-label">
+                              <span class="bg-red">
+                                10 Feb. 2014
+                              </span>
+                            </li>
+  
+                            <li>
+                              <i class="fa fa-minus bg-red"></i>
+  
+                              <div class="timeline-item">
+                                <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+  
+                                <h3 class="timeline-header"> <b>Ensino Médio</b></h3>
+  
+                                <div class="timeline-body">
+                                  <p>Instituição : UFC </p>
+                                  <p>Ano de inicio : 2016 </p>
+                                  <p>Ano de conclusão (previso) : 2020 </p>
+                                </div>
+  
+                              </div>
+                            </li>
+  
+                      
+                        </ul>
+                      </div>
+                    </div>
+          </div>  
+        </div>
+      </div>
+      <div class="box-footer">
+         
+      </div>
+    </div>
+  </div>
+</div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script type="text/javascript">
+    var ctx = document.getElementById('candidatosChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Candidato 1', 'Candidato 2', 'Candidato 3', 'Candidato 4', 'Candidato 5', 'Candidato 6'],
+        datasets: [{
+          label: 'Pontuação',
+          data: [12, 19, 3, 5, 2, 3],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        events: ['click'],
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+
+
+    $(document).ready(function () {
+
+      $('#service_request_request_priority option').each(function () {
+        if (this.innerHTML.indexOf("*") != -1) {
+          var catclass = this.innerHTML.split("*", 2);
+          $(this).addClass(catclass[0]);
+          this.text = catclass[1];
+        }
+      })
+
+      $("#service_request_request_priority").chained("#service_request_request_type");
+
+      $('#service_request_request_subcategory option').each(function () {
+        if (this.innerHTML.indexOf("*") != -1) {
+          var catclass = this.innerHTML.split("*", 2);
+          $(this).addClass(catclass[0]);
+          this.text = catclass[1];
+        }
+      })
+
+      $("#service_request_request_subcategory").chained("#service_request_request_category");
+
+    });
+  </script>
+
+</div>
+
+
+
+</section>

@@ -6,7 +6,7 @@ The list utilizes the datatables plugin.
 The create and view views utilize the cascading field plugin.
 '''
 
-table = db.dog_owner
+table = db.etapa
 response.view_title = '%s %s' % (
     request.function.replace('_', ' ').title(),
     table._singular
@@ -20,7 +20,7 @@ def index():
 def list():
     announcement = None  # XML(response.render('announcement.html'))
     query = (table)
-    items = db(query).select(orderby=~table.created_on).render()
+    items = db(query).select(orderby=~table.id).render()
 
     actions = [
         {'is_item_action': lambda item: True, 'url': lambda item: URL('view.html', args=[item.id]), 'icon': 'search'},

@@ -6,6 +6,14 @@ Field("valor","string",notnull=True)
 )
 # in sql SELECT valor FROM metadados where chave = "<chave>"
 
+Etapa = db.define_table("etapa",
+Field('data','date',label="Data da etapa",requires = IS_DATE(format=('%m/%d/%Y'))),
+Field('hora','time'),
+Field('informacoes','string',label="Informações"),
+Field('titulo','string'),
+Field("tipo","integer",label="tipo",notnull=True,requires = IS_IN_SET((1,2,3,4))),
+)
+
 
 
 Curriculo = db.define_table('curriculo',
@@ -51,7 +59,7 @@ Field('responsavelVaga', 'string', label='Responsável pela Vaga')
 
 
 Processo = db.define_table('processo',
-Field('etapa', 'list:string'),
+Field('etapas', 'list:reference etapa'),
 Field('idVaga', 'reference vaga'),
 Field('prazo', 'date')
 )
@@ -59,9 +67,7 @@ Field('prazo', 'date')
 
 
 Entrevista = db.define_table('entrevista',
-Field('obsNegativas', 'list:string', label='Pontos Negativos'),
-Field('obsPositivas', 'list:string', label='Pontos Positivos'),
-Field('id_curriculo', 'reference curriculo'),
+Field('obs_gerais', 'json', label='Observações gerais'),
 Field('id_processo', 'reference processo')
 )
 
@@ -69,9 +75,7 @@ Dinamica = db.define_table('dinamica',
 Field('nome', 'string', label='Nome'),
 Field('descricao', 'string', label='Descrição'),
 Field('tipo', 'boolean', label='Tipo de Dinamica'),
-Field('obsNegativas', 'list:string', label='Pontos Negativos'),
-Field('obsPositivas', 'list:string', label='Pontos Positivos'),
-Field('id_curriculo','reference curriculo'),
+Field('obs_gerais', 'json', label='Observações gerais'),
 Field('id_processo', 'reference processo')
 )
 
@@ -79,17 +83,14 @@ Teste = db.define_table('teste',
 Field('nome', 'string', label='Nome'),
 Field('descricao', 'string', label='Contato'),
 Field('tipo', 'boolean', label='Tipo de Dinamica'),
-Field('obsNegativas', 'list:string', label='Pontos Negativos'),
-Field('obsPositivas', 'list:string', label='Pontos Positivos'),
-Field('id_curriculo', 'reference curriculo'),
+Field('obs_gerais', 'json', label='Observações gerais'),
 Field('id_processo', 'reference processo')
 )
 
 
 
-ProcessoCurriculo = db.define_table('processoCurriculo',
-Field('id_curriculo', 'reference curriculo'),
-Field('idProcesso', 'reference processo')
+ProcessoCurriculo = db.define_table('processo_curriculo',
+Field('candidatos', 'list:reference curriculo'),
+Field('id_processo', 'reference processo')
 )
-
 

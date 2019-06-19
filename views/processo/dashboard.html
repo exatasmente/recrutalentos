@@ -15,47 +15,25 @@
             <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
               <i class="fa fa-bars"></i></button>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="#">Adicionar Etapa</a></li>
+              <li>
+                <a id="addEtapa">Adicionar Etapa</a>
+              </li>
               <li><a href="#">Gerar Relatório</a></li>
             </ul>
           </div>
         </div>
       </div>
-      <!-- /.box-header -->
       <div class="box-body">
         <div class="row">
           <div class="col-md-8">
             <p class="text-center">
               <strong>Candidatos</strong>
             </p>
-
             <div class="chart">
-              <!-- Sales Chart Canvas -->
+
               <canvas id="candidatosChart" style="height: 100%; width: 636px;" width="636" height="400"></canvas>
             </div>
-            <!-- /.chart-responsive -->
-            <div class="candidados">
-              <ul class="products-list product-list-in-box">
-                {{for candidato in candidatos:}}
-                
-                <li class="item">
-                  <div class="product-img">
-                    <img src="{{=candidato['foto']}}"" alt=" {{=candidato['nome']}}">
-                  </div>
-                  <div class="product-info">
-                    <a href="javascript:void(0)" class="product-title">{{=candidato['nome'] }}</a>
-                    <p class="product-description">
-
-                    </p>
-                  </div>
-                </li>
-                {{pass}}
-                <!-- /.item -->
-
-              </ul>
-            </div>
           </div>
-          <!-- /.col -->
           <div class="col-md-4">
             <p class="text-center">
               <strong>Etapas</strong>
@@ -86,9 +64,8 @@
                   </div>
 
                   <div class="timeline-footer">
-                    {{for acao in etapa["acoes"]:}}
-                    <a href="{{=acao['link']}}" class="btn btn-primary btn-xs">{{=acao["nome"]}}</a>
-                    {{pass}}
+                    <a href="{{=URL('processo','etapa',vars=dict(id_processo=etapa['id_processo'],id_etapa=etapa['id']))}}" class="btn btn-primary btn-flat">Ver</a>
+                    
                   </div>
                 </div>
               </li>
@@ -96,31 +73,6 @@
               <!-- END timeline item -->
             </ul>
 
-            <form id="etapas" class="form-group" style="margin-left: 40px">
-              <label>Nova Etapa</label>
-              <select name="tipo" class="form-control">
-                <option value="1">Entrevista</option>
-                <option value="2">Teste</option>
-                <option value="3">Dinâmica</option>
-              </select>
-              <label>Data:</label>
-              <div class="input-group date">
-                <div class="input-group-addon">
-                  <i class="fa fa-calendar"></i>
-                </div>
-                <input name="prazo" type="text" class="form-control pull-right" id="prazo">
-
-              </div>
-              <label>Descrição:</label>
-              <div class="input-group text">
-                <input name="descricao" type="text" class="form-control pull-right" id="descricao">
-                <span class="input-group-btn">
-                  <button type="submit"    class="btn btn-success btn-flat">Adicionar</button>
-                </span>
-              </div>
-              <!-- /.input group -->
-
-            </form>
 
 
           </div>
@@ -128,62 +80,102 @@
         </div>
         <!-- /.col -->
       </div>
-      <!-- /.row -->
-    </div>
-    <!-- ./box-body -->
-    <div class="box-footer">
-      <div class="row">
-
+      <div class="box-footer">
       </div>
-      <!-- /.row -->
     </div>
-    <!-- /.box-footer -->
   </div>
-  <!-- /.box -->
 </div>
-<!-- /.col -->
+<div class="row">
+  <div class="col-md-6">
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Candidatos</h3>
+
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+          </button>
+          <div class="btn-group">
+            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+              <i class="fa fa-bars"></i></button>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <a id="addEtapa">Adicionar Etapa</a>
+              </li>
+              <li><a href="#">Gerar Relatório</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="box-body">
+        <div class="candidados">
+          <ul class="products-list product-list-in-box">
+            {{for candidato in candidatos:}}
+
+            <li class="item">
+              <div class="product-img">
+                <img src="{{=candidato['foto']}}" alt=" {{=candidato['nome']}}">
+              </div>
+              <div class="product-info">
+                <a href="javascript:void(0)" class="product-title">{{=candidato['nome'] }}</a>
+                <p class="product-description">
+
+                </p>
+              </div>
+            </li>
+            {{pass}}
+            <!-- /.item -->
+
+          </ul>
+        </div>
+      </div>
+      <div class="box-footer">
+      </div>
+    </div>
+  </div>
 </div>
+{{include 'layout_modal.html'}}
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script type="text/javascript">
-jQuery("#etapas").submit( function(){
-  ajax('{{=URL('processo', 'etapas')}}', ['tipo','prazo','descricao'],':eval');
-  return false;
-})
+
+  jQuery("#addEtapa").click(function () {
+    jQuery("#modalAddEtapa").modal();
+
+  })
 
   var ctx = document.getElementById('candidatosChart').getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: [
-        {{i = len(candidatos)}}
-        {{for c in candidatos:}}
-          "{{response.write(c["nome"])}}"
-          {{if i > 1:}}
-            {{response.write(",")}}
+        {{ i = len(candidatos) }}
+        {{ for c in candidatos: }}
+          "{{=c["nome"]}}"
+          {{ if i > 1:}}
+              ,
           {{pass}}
-          {{i = i -1}}
-          
-         {{pass}}
+          {{ i = i - 1 }}
+        {{pass}}
          ],
-      datasets: [{
-        label: 'Pontuação',
-        data: [{{for c in candidatos:}} {{=c["pontos"]+","}} {{pass}}],
-        borderWidth: 0
+  datasets: [{
+    label: 'Pontuação',
+    data: [{{ for c in candidatos: }} {{=c["pontos"]+"," }} {{ pass }}],
+    borderWidth: 0
       }]
     },
-    options: {
-      events: ['click'],
+  options: {
+    events: ['click'],
       scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
-          }
-        }]
-      }
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
     }
+  }
   });
 
-  
+
   $(document).ready(function () {
 
     $('#service_request_request_priority option').each(function () {
