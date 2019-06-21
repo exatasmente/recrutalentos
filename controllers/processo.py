@@ -135,7 +135,18 @@ def candidato():
     
 @auth.requires_membership('admin')
 def dashboard():
-    etapa_form = SQLFORM(db.etapa)
+
+    def get_form_modals():
+        etapas = dict(form=SQLFORM.factory(
+            Field("titulo", 'string', label="Nome da etapa"),
+            Field("tipo","integer",label="Tipo da etapa",notnull=True,requires = IS_IN_SET(((1,"Entrevista"),(2,"Teste"),(3,"Dinâmica")))),        
+            Field('data', 'date', label='Data da etapa',requires = IS_DATE(format=('%m/%d/%Y'))),
+            Field('informacoes', 'string', label='Descrição da etapa')
+        ),nome="Etapas")
+        return [etapas]
+    
+    
+    
 
     processo = table(table.id == request.args(0))
     
@@ -152,7 +163,7 @@ def dashboard():
     
 
     response.view_title = "Processo : #"+request.args(0) + " Dashboard"
-    return dict(nome_processo=nome_processo,candidatos=candidatos,etapas = etapas,etapas_form= etapa_form)
+    return dict(nome_processo=nome_processo,candidatos=candidatos,etapas = etapas,modal_form= get_form_modals())
 
 def etapa():
     processo = db.processo_curriculo(db.processo_curriculo.id_processo == request.vars['id_processo'])

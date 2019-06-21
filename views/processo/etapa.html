@@ -46,14 +46,10 @@
             <li>
               <img src="{{=candidato["foto"]}}" alt="Foto do Candidato">
               <a class="users-list-name" href="{{=URL('processo','candidato',vars=dict(id_candidato=candidato['id'],id_processo= id_processo,id_etapa= id_etapa))}}">
-                <font style="vertical-align: inherit;">
-                  <font style="vertical-align: inherit;">{{=candidato["nome"]}}</font>
-                </font>
+                <font style="vertical-align: inherit;">{{=candidato["nome"]}}</font>
               </a>
               <span class="users-list-date">
-                <font style="vertical-align: inherit;">
-                  <font style="vertical-align: inherit;">{{=candidato["pontos"]}}</font>
-                </font>
+                <font style="vertical-align: inherit;">{{=candidato["pontos"]}}</font>
               </span>
             </li>
             
