@@ -22,35 +22,11 @@
       <div class="box-body">
 
         {{=form}}
-        {{=list}}
+        
       </div><!-- /.box-body -->
     </div><!-- /.box -->
   </div><!-- /.col --><!-- /Documents -->
 
 </div><!-- /.row -->
 
-<script type="text/javascript">
-  $(document).ready(function() {
 
-    $('#service_request_request_priority option').each(function() {
-      if (this.innerHTML.indexOf("*") != -1) {
-          var catclass = this.innerHTML.split("*",2);
-          $(this).addClass(catclass[0]);
-          this.text = catclass[1];
-      }
-    })
-
-    $("#service_request_request_priority").chained("#service_request_request_type");
-
-    $('#service_request_request_subcategory option').each(function() {
-      if (this.innerHTML.indexOf("*") != -1) {
-          var catclass = this.innerHTML.split("*",2);
-          $(this).addClass(catclass[0]);
-          this.text = catclass[1];
-      }
-    })
-
-    $("#service_request_request_subcategory").chained("#service_request_request_category");
-
-  } );
-</script>

@@ -17,12 +17,12 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-
+    
     // add a text input to each footer cell for column search
     $('#{{=item_name.replace(' ','-')}}-datatable tfoot th').each( function () {
         var title = $('#{{=item_name.replace(' ','-')}}-datatable thead th').eq( $(this).index() ).text();
         if (title != '') {
-          $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+          $(this).html( '<input type="text" placeholder="Buscar '+title+'" />' );
         }
     } );
 
@@ -60,18 +60,6 @@
     {{=announcement}}
   </div>
 {{pass}}
-
-<h4>
-    <a href='{{=URL(request.controller, 'create')}}'>
-      <i class="fa fa-pencil"> Novo {{=item_name}}</i>
-    </a>
-</h4>
-
-<p>
-You can
-view <i class="fa fa-search"></i> more information.
-If you're authorized, you can also edit <i class="fa fa-pencil"></i> the {{=item_name}}.
-</p>
 
 <div class="row">
 

@@ -38,7 +38,7 @@
             <p class="text-center">
               <strong>Etapas</strong>
             </p>
-            <ul id="timeline" class="timeline" style="max-height: 600px; overflow: auto">
+            <ul id="timeline" class="timeline" style="max-height:400px; overflow: auto">
 
               <!-- timeline time label -->
               {{for etapa in etapas:}}
@@ -94,16 +94,6 @@
         <div class="box-tools pull-right">
           <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
           </button>
-          <div class="btn-group">
-            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-              <i class="fa fa-bars"></i></button>
-            <ul class="dropdown-menu" role="menu">
-              <li>
-                <a id="addEtapa">Adicionar Etapa</a>
-              </li>
-              <li><a href="#">Gerar Relatório</a></li>
-            </ul>
-          </div>
         </div>
       </div>
       <div class="box-body">
@@ -116,7 +106,7 @@
                 <img src="{{=candidato['foto']}}" alt=" {{=candidato['nome']}}">
               </div>
               <div class="product-info">
-                <a href="javascript:void(0)" class="product-title">{{=candidato['nome'] }}</a>
+                <a  href="{{=URL('processo','candidato',vars=dict(id_candidato=candidato['id'],id_processo= id_processo))}}" class="product-title">{{=candidato['nome'] }}</a>
                 <p class="product-description">
 
                 </p>
@@ -160,43 +150,20 @@
   datasets: [{
     label: 'Pontuação',
     data: [{{ for c in candidatos: }} {{=c["pontos"]+"," }} {{ pass }}],
-    borderWidth: 0
+    borderWidth: 0    
       }]
     },
-  options: {
-    events: ['click'],
-      scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
+    options: {
+        scales: {
+            xAxes: [{
+                stacked: false
+            }],
+            yAxes: [{
+                stacked: true
+            }]
         }
-      }]
     }
-  }
   });
 
 
-  $(document).ready(function () {
-
-    $('#service_request_request_priority option').each(function () {
-      if (this.innerHTML.indexOf("*") != -1) {
-        var catclass = this.innerHTML.split("*", 2);
-        $(this).addClass(catclass[0]);
-        this.text = catclass[1];
-      }
-    })
-
-    $("#service_request_request_priority").chained("#service_request_request_type");
-
-    $('#service_request_request_subcategory option').each(function () {
-      if (this.innerHTML.indexOf("*") != -1) {
-        var catclass = this.innerHTML.split("*", 2);
-        $(this).addClass(catclass[0]);
-        this.text = catclass[1];
-      }
-    })
-
-    $("#service_request_request_subcategory").chained("#service_request_request_category");
-
-  });
 </script>

@@ -14,22 +14,22 @@ def index():
 
 def list():
     announcement = None  # XML(response.render('announcement.html'))
-    query = (table)
-    items = db(query).select(orderby=~table.id).render()
+    
+    
+    items = db().select(db.processo.ALL, db.vaga.ALL,left=db.vaga.on(db.processo.idVaga == db.vaga.id)).render()
+    
+    
 
     actions = [
-        {'is_item_action': lambda item: True, 'url': lambda item: URL(request.controller, 'view', args=[item.id]), 'icon': 'search'},
-        {'is_item_action': lambda item: True, 'url': lambda item: URL('edit', args=[item.id]), 'icon': 'pencil'},
-        {'is_item_action': lambda item: True, 'url': lambda item: URL(request.controller,'dashboard', args=[item.id]), 'icon': 'cube'}
+        {'is_item_action': lambda item: True, 'url': lambda item: URL(request.controller, 'view', args=[item.processo.id]), 'icon': 'search'},
+        {'is_item_action': lambda item: True, 'url': lambda item: URL('edit', args=[item.processo.id]), 'icon': 'pencil'},
+        {'is_item_action': lambda item: True, 'url': lambda item: URL(request.controller,'dashboard', args=[item.processo.id]), 'icon': 'cube'}
     ]
 
-    fields = [f for f in table]
-    # fields = [
-    #     table.id,
-    #     table.created_on, table.created_by,
-    # ]
+    fields = [f for f in [db.processo.id,db.vaga.nome,db.processo.prazo]]
 
-    
+
+    response.view = "template/list.html" 
     return dict(
         item_name=table._singular,
         row_list=items,
@@ -38,11 +38,54 @@ def list():
         announcement=announcement
     )
 
+def buscar():
+    processo = table(table.id == request.args(0))
+    vaga = db.vaga(processo.idVaga)
+    RC.buscaCandidatos(vaga,processo.id)
+
 
 @auth.requires_login()
 def create():
+
+    def add_etapa1(vaga,id_processo):
+        from datetime import datetime
+        data = datetime.now().date()
+        
+        
+        vars = dict(tipo = 4, 
+                    titulo = "Criar Vaga",
+                    informacoes = RC.get_descricao_vaga(vaga),
+                    data = data,
+                    hora = "".join([str(datetime.now().time().hour),":",str(datetime.now().time().minute)]),
+                    acoes = dict(link=URL("vaga",args=vaga.id),nome="Ver Vaga")
+                    )
+        processo = db.processo(id_processo)
+        id_etapa = db.etapa.insert(**db.etapa._filter_fields(vars))
+        if processo.etapas:
+            processo.update_record(etapas=processo.etapas+[id_etapa])
+        else:
+            processo.update_record(etapas=[id_etapa])
+    def add_etapa2(vaga,id_processo):
+        from datetime import datetime
+        data = datetime.now().date()
+        
+        
+        vars = dict(tipo = 5, 
+                    titulo = "Contato",
+                    informacoes = "Entrar em contato com os candidatos",
+                    data = data,
+                    hora = "".join([str(datetime.now().time().hour),":",str(datetime.now().time().minute)])
+                    
+                    )
+        processo = db.processo(id_processo)
+        id_etapa = db.etapa.insert(**db.etapa._filter_fields(vars))
+        if processo.etapas:
+            processo.update_record(etapas=processo.etapas+[id_etapa])
+        else:
+            processo.update_record(etapas=[id_etapa])
+
     form = SQLFORM.factory(
-        Field("nome", 'string', label="nome"),
+        Field("nome", 'string', label="Nome da vaga"),
         Field("form_academica","integer",label="Formação Acadêmica",notnull=True,requires = IS_IN_SET(((1,"Superior"),(2,"Técnico"),(3,"Médio"),(4,"Fundamental"),(5,"Não se aplica")))),
         Field('experiencia', 'integer', label='Experiencia Profissional (em meses)'),
         Field('localTrabalho', 'string', label='Local de Trabalho'),
@@ -52,14 +95,18 @@ def create():
         Field('qtdVagas', 'integer', label='Quantidade de Vagas'),
         Field('qtdCandidatos', 'integer', label='Quantidade de Candidatos'),
         Field('responsavelVaga', 'string', label='Responsável pela Vaga'),
-        Field('prazo', 'date', label='Prazo para o Processo',requires = IS_DATE(format=('%m/%d/%Y')))
+        Field('prazo', 'date', label='Prazo para o Processo',requires = IS_DATE(format=('%m/%d/%Y'))),
+        _id="createform"
     )
+    
     form.custom.widget.experiencia.update(_placeholder="em Meses")
     if form.process().accepted:
         id_vaga = db.vaga.insert(**db.vaga._filter_fields(form.vars))
         id_processo = db.processo.insert(etapa=1,idVaga=id_vaga,prazo = form.vars.prazo)
         vaga = db.vaga(id_vaga)
+        add_etapa1(vaga,id_processo)
         RC.buscaCandidatos(vaga,id_processo)
+        add_etapa2(vaga,id_processo)
         session.flash = "Vaga Adicionada com Sucesso"
         redirect(URL(request.controller, 'list'))
     elif form.errors:
@@ -125,10 +172,26 @@ def update():
 def candidato():
     id_candidato = request.vars['id_candidato']
     id_processo = request.vars['id_processo']
-    id_etapa =request.vars['id_etapa']
+    id_etapa =request.vars['id_etapa'] or None
 
     curriculo = db.curriculo(id_candidato)
-    candidato = dict(foto=URL(curriculo.foto),nome=curriculo.nome,data_nascimento=curriculo.data_nascimento)
+    formacao = ""
+    formacoes = [db.formacao_academica(db.formacao_academica.id_curriculo == id_candidato)]
+    print(formacoes)
+    experiencias = []
+    conhecimentos = []
+    observacoes = []
+    candidato = dict(
+        foto="http://127.0.0.1:8000/recrutalentos/static/img/avatar5.png",
+        nome=curriculo.nome,
+        data_nascimento=curriculo.data_nascimento,
+        formacoes=formacoes,
+        formacao = formacao,
+        experiencias= experiencias,
+        conhecimentos= conhecimentos,
+        observacoes=observacoes,
+        objetivo = curriculo.objetivo_setor,
+        endereco = " ".join(curriculo.endereco))
 
     response.view_title = "Processo: #"+id_processo+" - Candidato : #"+str(id_candidato)
     return candidato
@@ -136,13 +199,18 @@ def candidato():
 @auth.requires_membership('admin')
 def dashboard():
 
-    def get_form_modals():
-        etapas = dict(form=SQLFORM.factory(
+    def get_form_modals():        
+        from datetime import datetime
+        etapas_form = SQLFORM.factory(
             Field("titulo", 'string', label="Nome da etapa"),
             Field("tipo","integer",label="Tipo da etapa",notnull=True,requires = IS_IN_SET(((1,"Entrevista"),(2,"Teste"),(3,"Dinâmica")))),        
             Field('data', 'date', label='Data da etapa',requires = IS_DATE(format=('%m/%d/%Y'))),
-            Field('informacoes', 'string', label='Descrição da etapa')
-        ),nome="Etapas")
+            Field('informacoes', 'text', label='Descrição da etapa'),
+            buttons = [BUTTON('Salvar', _type="submit")],
+            hidden=dict(id_processo=request.args(0)),
+            _action=URL('etapas'))
+
+        etapas = dict(form=etapas_form,nome="Adicionar Etapa")
         return [etapas]
     
     
@@ -154,16 +222,19 @@ def dashboard():
     curriculos = db.processo_curriculo(db.processo_curriculo.id_processo == request.args(0)) or redirect(URL('index'))
     
     candidatos = []
-    etapas = [  RC.parse_etapa(db.etapa(etapa),processo.id) for etapa in processo.etapas]
+    if processo.etapas:
+        etapas = [  RC.parse_etapa(db.etapa(etapa),processo.id) for etapa in processo.etapas if etapa]
+    else:
+        etapas = []
     
     for candidato in curriculos.candidatos:
         c = db.curriculo(candidato)
-        candidatos.append({"nome": c.nome,"pontos":"10","foto":"http://127.0.0.1:8000/recrutalentos/static/img/avatar5.png"})
+        candidatos.append({"id": c.id,"nome": c.nome,"pontos":"10","foto":"http://127.0.0.1:8000/recrutalentos/static/img/avatar5.png"})
     
     
 
     response.view_title = "Processo : #"+request.args(0) + " Dashboard"
-    return dict(nome_processo=nome_processo,candidatos=candidatos,etapas = etapas,modal_form= get_form_modals())
+    return dict(nome_processo=nome_processo,candidatos=candidatos,etapas = etapas,modal_form= get_form_modals(),id_processo=processo.id)
 
 def etapa():
     processo = db.processo_curriculo(db.processo_curriculo.id_processo == request.vars['id_processo'])
@@ -184,55 +255,23 @@ def etapa():
 
 def etapas():
     from datetime import datetime
-
-
-
-    if request.vars.acao == "1":
-        resp = response.render("layout_modal.html", dict(
-        modal_title = "Teste",
-        modal_action = ["Fechar","Salvar"],
-        modal_body = P("Teste")
-        ))
+    
+    if request.ajax:
+        data = datetime.strptime(request.vars.data, '%m/%d/%Y')
+        request.vars.data = data
         
-        return "jQuery('#modal').append('"+str(resp)+"');"
-
-    cor = ""
-    prazo = request.vars.prazo or " "
-    descricao = request.vars.descricao or " "
-    hora = "".join([str(datetime.now().time().hour),":",str(datetime.now().time().minute)])
-    if request.vars.tipo == 1 : 
-        cor ='bg-blue'
-    else: 
-        cor ='bg-green'
-
-    
-    
-    return "jQuery('#timeline').append('"+str(LI(SPAN(prazo,_class=cor),_class="time-label"))+str(LI(
-        I(_class="fa fa-suitcase "+cor),
-        DIV(
-            SPAN(
-                I(_class="fa fa-clock-o"),
-                " "+hora,
-                _class="time"
-                ),
-            H3(
-                A("TIPO ETAPA",_href="#"),
-                _class="timeline-header"
-                )
-            ,
-            DIV(
-                descricao,
-                _class="timeline-body"
-            ),
-            DIV(
-                A(
-                    "Ver",
-                    _href="#",
-                    _class="btn btn-primary btn-xs"
-                ),
-                _class="timeline-footer"
-            ),
-            _class="timeline-item"
-            ),
-        ))+"');"
+        vars = dict(tipo = int(request.vars.tipo), 
+                    titulo = request.vars.titulo,
+                    informacoes = request.vars.informacoes,
+                    data = request.vars.data,
+                    hora = "".join([str(datetime.now().time().hour),":",str(datetime.now().time().minute)])
+                    
+                    )
+        processo = db.processo(request.vars.id_processo)
+        id_etapa = db.etapa.insert(**db.etapa._filter_fields(vars))
+        if processo.etapas:
+            processo.update_record(etapas=processo.etapas+[id_etapa])
+        else:
+            processo.update_record(etapas=[id_etapa])
+        return RC.parse_etapa(db.etapa(id_etapa),request.vars.id_processo,html=True)
      

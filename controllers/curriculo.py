@@ -41,12 +41,12 @@ def list():
 @auth.requires_login()
 def create_step2():
     form = SQLFORM.factory(
-        Field("instituicao","string",label="Instituição",notnull=True),
-        Field("tipo","integer",label="Formação",notnull=True,requires = IS_IN_SET(((1,"Superior"),(2,"Técnico"),(3,"Médio"),(4,"Fundamental"),(5,"Não se aplica")))),
+        Field("instituicao","string",label="Instituição"),
+        Field("tipo","integer",label="Formação",requires = IS_IN_SET(((1,"Superior"),(2,"Técnico"),(3,"Médio"),(4,"Fundamental"),(5,"Não se aplica")))),
         Field("curso","string",label="Curso",default="Não Se Aplica"),
-        Field("situacao","integer",label="Situação",notnull=True, requires = IS_IN_SET(((1,"Completo"),(2,"Incompleto"),(3,"Cursando")))),
-        Field("ano_inicio","date",label="Ano de Inicio",notnull=True,requires = IS_DATE(format=('%m/%d/%Y'))),
-        Field("ano_conclusao","date",label="Ano de Conclusão",notnull=True,requires = IS_DATE(format=('%m/%d/%Y'))),
+        Field("situacao","integer",label="Situação", requires = IS_IN_SET(((1,"Completo"),(2,"Incompleto"),(3,"Cursando")))),
+        Field("ano_inicio","date",label="Ano de Inicio",requires = IS_DATE(format=('%m/%d/%Y'))),
+        Field("ano_conclusao","date",label="Ano de Conclusão",requires = IS_DATE(format=('%m/%d/%Y'))),
         hidden = dict(id_curriculo=session.data),
         buttons = [BUTTON('Voltar', _type="button", _onClick="parent.location='%s'" %URL(request.controller, 'create')),BUTTON('Avançar', _type="submit")]
     )
